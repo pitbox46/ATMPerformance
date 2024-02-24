@@ -138,6 +138,12 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -162,6 +168,8 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    implementation fg.deobf("curse.maven:voidscape-251730:5020417")
+    runtimeOnly(fg.deobf("curse.maven:spark-361579:4738952"))
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
