@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "atmperformance.refmap.json",
   "mixins": [
+    "artifacts.MimicEntityMixin",
     "voidscape.AttachedSubCapMixin",
     "voidscape.SubCapabilityMixin"
   ],
