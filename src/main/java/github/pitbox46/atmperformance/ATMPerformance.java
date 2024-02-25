@@ -7,7 +7,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkConstants;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
+/* MISC TODO
+ * Add config option for Mimic tick distance
+ * Add Mixin config
+ */
 @Mod(ATMPerformance.MODID)
 public class ATMPerformance {
     public static final String MODID = "atmperformance";
