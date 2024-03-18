@@ -135,15 +135,19 @@ repositories {
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
-     flatDir {
-         dir 'libs'
-     }
+    flatDir {
+        dir 'libs'
+    }
     maven {
         url "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
     }
+    maven { // Registrate
+        url "https://maven.tterrag.com/"
+    }
+    mavenLocal()
 }
 
 dependencies {
@@ -164,10 +168,14 @@ dependencies {
     implementation fg.deobf("curse.maven:cloth-config-348521:4973441")
     implementation fg.deobf("curse.maven:curios-309927:5086821")
     implementation fg.deobf("curse.maven:expandability-465066:4630724")
+    implementation fg.deobf("curse.maven:jei-238222:5101366")
+    implementation fg.deobf("curse.maven:ldlib-626676:5107362")
+    implementation fg.deobf("com.tterrag.registrate:Registrate:MC1.20-1.3.3")
+    implementation fg.deobf("curse.maven:configuration-444699:4710266")
     //Is local because the default JarInJar's expandability which we need to deobf.
     //I manually deleted the JarInJar
     implementation fg.deobf("local:artifacts-forge:9.2.2")
-
+    implementation fg.deobf("local:gtceu:1.20.1-1.1.3.b")
 
 }
 
