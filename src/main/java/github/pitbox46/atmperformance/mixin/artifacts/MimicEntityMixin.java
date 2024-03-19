@@ -25,7 +25,7 @@ public abstract class MimicEntityMixin extends Mob {
 
     @Shadow(remap = false) public boolean isDormant;
 
-    @Shadow public abstract void setDormant(boolean isDormant);
+    @Shadow(remap = false) public abstract void setDormant(boolean isDormant);
 
     protected MimicEntityMixin(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
