@@ -27,14 +27,12 @@ public class ChemicalHelperMixin {
     @Nullable
     @Overwrite
     public static UnificationEntry getUnificationEntry(ItemLike itemLike) {
-        return ATMPerformance.MAIN_BENCHMARK.benchmarkAndLog(() -> {
-            for (Map.Entry<Supplier<? extends ItemLike>, UnificationEntry> entry : ITEM_UNIFICATION_ENTRY) {
-                FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.put(entry.getKey().get(), entry.getValue());
-            }
-            ITEM_UNIFICATION_ENTRY.clear();
+        for (Map.Entry<Supplier<? extends ItemLike>, UnificationEntry> entry : ITEM_UNIFICATION_ENTRY) {
+            FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.put(entry.getKey().get(), entry.getValue());
+        }
+        ITEM_UNIFICATION_ENTRY.clear();
 
-            return FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.get(itemLike);
-        }).value();
+        return FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.get(itemLike);
 
         // Default Method, here for performance before/after comparison
 //        return ATMPerformance.MAIN_BENCHMARK.benchmarkAndLog(() -> {
