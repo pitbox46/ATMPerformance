@@ -9,10 +9,8 @@ import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.*;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 @Mixin(value = ChemicalHelper.class, remap = false)
@@ -29,31 +27,31 @@ public class ChemicalHelperMixin {
     @Nullable
     @Overwrite
     public static UnificationEntry getUnificationEntry(ItemLike itemLike) {
-//        return ATMPerformance.MAIN_BENCHMARK.benchmarkAndLog(() -> {
-//            for (Map.Entry<Supplier<? extends ItemLike>, UnificationEntry> entry : ITEM_UNIFICATION_ENTRY) {
-//                FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.put(entry.getKey().get(), entry.getValue());
-//            }
-//            ITEM_UNIFICATION_ENTRY.clear();
-//
-//            return FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.get(itemLike);
-//        }).value();
+        return ATMPerformance.MAIN_BENCHMARK.benchmarkAndLog(() -> {
+            for (Map.Entry<Supplier<? extends ItemLike>, UnificationEntry> entry : ITEM_UNIFICATION_ENTRY) {
+                FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.put(entry.getKey().get(), entry.getValue());
+            }
+            ITEM_UNIFICATION_ENTRY.clear();
+
+            return FAST_ITEM_UNIFICATION_ENTRY_COLLECTED.get(itemLike);
+        }).value();
 
         // Default Method, here for performance before/after comparison
-        return ATMPerformance.MAIN_BENCHMARK.benchmarkAndLog(() -> {
-            return ITEM_UNIFICATION_ENTRY_COLLECTED.computeIfAbsent(itemLike, (item) -> {
-                Iterator<Map.Entry<Supplier<? extends ItemLike>, UnificationEntry>> var2 = ITEM_UNIFICATION_ENTRY.iterator();
-
-                Map.Entry<Supplier<? extends ItemLike>, UnificationEntry> entry;
-                do {
-                    if (!var2.hasNext()) {
-                        return null;
-                    }
-
-                    entry = var2.next();
-                } while(entry.getKey().get().asItem() != itemLike.asItem());
-
-                return entry.getValue();
-            });
-        }).value();
+//        return ATMPerformance.MAIN_BENCHMARK.benchmarkAndLog(() -> {
+//            return ITEM_UNIFICATION_ENTRY_COLLECTED.computeIfAbsent(itemLike, (item) -> {
+//                Iterator<Map.Entry<Supplier<? extends ItemLike>, UnificationEntry>> var2 = ITEM_UNIFICATION_ENTRY.iterator();
+//
+//                Map.Entry<Supplier<? extends ItemLike>, UnificationEntry> entry;
+//                do {
+//                    if (!var2.hasNext()) {
+//                        return null;
+//                    }
+//
+//                    entry = var2.next();
+//                } while(entry.getKey().get().asItem() != itemLike.asItem());
+//
+//                return entry.getValue();
+//            });
+//        }).value();
     }
 }

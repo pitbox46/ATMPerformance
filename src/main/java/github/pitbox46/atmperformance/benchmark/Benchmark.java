@@ -7,22 +7,23 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadMXBean;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 public class Benchmark {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String[] HEADER = {"start", "finish"};
     private final File log;
+    private final Executor executor;
 
     public Benchmark(String name) {
         this.log = createLogFile(name);
+        this.executor = Executors.newSingleThreadExecutor(r -> new Thread(r, "Benchmark-" + name));
         addHeader();
     }
 
@@ -35,15 +36,17 @@ public class Benchmark {
 
     public <T> Data<T> benchmarkAndLog(Supplier<T> target) {
         Data<T> data = benchmark(target);
-        StringBuilder builder = new StringBuilder("\n");
-        for (String value : data.data()) {
-            builder.append(value).append(',');
-        }
-        try (FileWriter writer = new FileWriter(log, true)) {
-            writer.write(builder.toString());
-        } catch (IOException e) {
-            LOGGER.warn(e);
-        }
+        executor.execute(() -> {
+            StringBuilder builder = new StringBuilder("\n");
+            for (String value : data.data()) {
+                builder.append(value).append(',');
+            }
+            try (FileWriter writer = new FileWriter(log, true)) {
+                writer.write(builder.toString());
+            } catch (IOException e) {
+                LOGGER.warn(e);
+            }
+        });
         return data;
     }
 
