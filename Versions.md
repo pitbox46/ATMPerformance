@@ -6,4 +6,5 @@ should use for each version of ATM9
 
 | ATM9 Version | ATMPerformance Version |
 |--------------|------------------------|
-| [0.2.48,)    | [1.0.0,)               |  
+| [0.2.48,)    | [1.0.0,)               |
+| (0.2.53,)    | [1.2.0,)               |
