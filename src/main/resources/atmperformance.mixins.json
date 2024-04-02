@@ -6,7 +6,6 @@
   "refmap": "atmperformance.refmap.json",
   "mixins": [
     "artifacts.MimicEntityMixin",
-    "gregtech.ChemicalHelperMixin",
     "voidscape.AttachedSubCapMixin",
     "voidscape.SubCapabilityMixin"
   ],
